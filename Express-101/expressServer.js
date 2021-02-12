@@ -1,0 +1,1 @@
+setInterval(() => {console.log(' Second')}, 1000);
