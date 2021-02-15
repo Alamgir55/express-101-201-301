@@ -45,6 +45,38 @@ app.post('/process_login', (req, res, next) => {
     }
 })
 
+app.param('id', (req, res, next, id) => {
+    console.log("Params called:", id);
+    next();
+});
+
+app.get('/story/:id', (req, res) => {
+    res.send(`<h1>Story ${req.params.id}</h1>`)
+});
+
+// app.get('/story/:storyId/:link', (req, res) => {
+//     res.send(`<h1>Story ${req.params.storyId} - ${req.params.link}</h1>`)
+//     res.send('<h2>Story 1</h2>')
+// });
+
+// app.get('/story/2', (req, res) => {
+//     res.send('<h2>Story 2</h2>')
+// });
+// app.get('/story/3', (req, res) => {
+//     res.send('<h2>Story 3</h2>')
+// });
+
+app.get('/statement', (req, res) => {
+    //res.sendFile(path.join(__dirname, 'userStatement/BankStatementChequing.png'));
+    res.download(path.join(__dirname, 'userStatement/BankStatementChequing.png'), 'jimStatement', (error)=> {
+        if(error){
+            if(!res.headersSent){
+                res.redirect('/download/error');
+            }
+        }
+    });
+})
+
 app.get('/welcome', (req, res) => {
     res.render('Welcome', {
         username: req.cookies.username
